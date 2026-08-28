@@ -1,6 +1,8 @@
 package dk.ek.animaldemo.service;
 
 import dk.ek.animaldemo.model.Animal;
+import dk.ek.animaldemo.model.Gender;
+import dk.ek.animaldemo.model.Species;
 import dk.ek.animaldemo.repository.AnimalRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +16,13 @@ public class AnimalService {
         this.animalRepository = animalRepository;
     }
 
-    public List<Animal> findAll(){
-        return animalRepository.findAll();
+    public List<Animal> getAnimals(Species species, Gender gender){
+        if (species == null && gender == null){
+            return animalRepository.findAll();
+        }
+
+        return animalRepository.findByFilters(gender, species);
+
     }
 
     public Animal getAnimalById(long id){

@@ -38,11 +38,27 @@ public class AnimalRepository {
     public List<Animal> findByFilters(Gender gender, Species species){
         List<Animal> foundAnimals = new ArrayList<>();
         //find animals, der matcher gender og species
+        for (Animal animal : animals) {
+            boolean matchesSpecies = (species == null) || (species == animal.getSpecies());
+            boolean matchesGender = (gender == null) || (gender == animal.getGender());
+            if (matchesSpecies && matchesGender) {
+                foundAnimals.add(animal);
+            }
+        }
         return foundAnimals;
     }
 
     private void populate() {
-        //initialiser repository med dyr
-
+        //initialiser repository med dyr - fra ChatGPT
+        save(new Animal("Nuller", Species.BIRD, Gender.MALE));
+        save(new Animal("Mille", Species.CAT, Gender.FEMALE));
+        save(new Animal("Rex", Species.DOG, Gender.MALE));
+        save(new Animal("Luna", Species.CAT, Gender.FEMALE));
+        save(new Animal("Pjuske", Species.RODENT, Gender.UNKNOWN));
+        save(new Animal("Nemo", Species.FISH, Gender.MALE));
+        save(new Animal("Bella", Species.DOG, Gender.FEMALE));
+        save(new Animal("Dino", Species.DINOSAUR, Gender.UNKNOWN));
+        save(new Animal("Kiki", Species.BIRD, Gender.FEMALE));
+        save(new Animal("Bølle", Species.OTHER, Gender.MALE));
     }
 }

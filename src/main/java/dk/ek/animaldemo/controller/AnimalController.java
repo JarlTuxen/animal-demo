@@ -1,10 +1,14 @@
 package dk.ek.animaldemo.controller;
 
 import dk.ek.animaldemo.model.Animal;
+import dk.ek.animaldemo.model.Gender;
+import dk.ek.animaldemo.model.Species;
 import dk.ek.animaldemo.service.AnimalService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/animalshelter")
@@ -14,6 +18,14 @@ public class AnimalController {
 
     public AnimalController(AnimalService animalService) {
         this.animalService = animalService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Animal>> getAnimals(
+            @RequestParam(required = false) Species species,
+            @RequestParam(required = false) Gender gender){
+        List<Animal> animals = animalService.getAnimals(species, gender);
+        return ResponseEntity.ok(animals);
     }
 
     @GetMapping("/{id}")
